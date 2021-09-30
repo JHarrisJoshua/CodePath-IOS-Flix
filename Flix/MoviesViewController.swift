@@ -60,6 +60,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         cell.titleLabel!.text = title
         cell.synopsisLabel.text = synopsis
         
+        cell.titleLabel.sizeToFit()
         cell.synopsisLabel.sizeToFit()
         
         let baseUrl = "https://image.tmdb.org/t/p/w185"
@@ -75,7 +76,25 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         return cell
     }
-
+    
+    // Mark: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller.
+        
+        // Pass the selected object to the new view controller.
+        
+        // Find the selected movie
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)!
+        let movie = movies[indexPath.row]
+        
+        // Pass the selected movie
+        let detailsViewController = segue.destination as! MovieDetailsViewController
+        detailsViewController.movie = movie
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
     
 }
 
